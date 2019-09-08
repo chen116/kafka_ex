@@ -37,7 +37,15 @@ defmodule KafkaEx.Protocol do
     <<api_key(type)::16, api_version::16, correlation_id::32,
       byte_size(client_id)::16, client_id::binary>>
   end
-
+  def create_request1(
+        type,
+        correlation_id,
+        client_id,
+        api_version \\ 1#@default_api_version
+      ) do
+    <<api_key(type)::16, api_version::16, correlation_id::32,
+      byte_size(client_id)::16, client_id::binary>>
+  end
   @error_map %{
     0 => :no_error,
     1 => :offset_out_of_range,
