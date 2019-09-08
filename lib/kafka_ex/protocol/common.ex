@@ -21,6 +21,7 @@ defmodule KafkaEx.Protocol.Common do
           partitions_size::32-signed, rest::binary>>,
         mod
       ) do
+        IO.puts( "resp parinsing topic")
     struct_module = Module.concat(mod, Response)
     {partitions, topics_data} = mod.parse_partitions(partitions_size, rest, [])
 
