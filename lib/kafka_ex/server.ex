@@ -823,6 +823,7 @@ defmodule KafkaEx.Server do
       # assumes module.create_request(request) and module.parse_response
       # both work
       defp network_request(request, module, state) do
+        IO.puts ("fetch1 in network_request #{request.topic}")
         {broker, updated_state} =
           broker_for_partition_with_update(
             state,
