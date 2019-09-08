@@ -58,7 +58,7 @@ defmodule KafkaEx.Protocol.Fetch do
 
   @spec create_request(Request.t()) :: binary
   def create_request(fetch_request) do
-    KafkaEx.Protocol.create_request1(
+    KafkaEx.Protocol.create_request(
       :fetch,
       fetch_request.correlation_id,
       fetch_request.client_id
