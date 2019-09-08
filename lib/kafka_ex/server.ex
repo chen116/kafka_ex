@@ -300,7 +300,7 @@ defmodule KafkaEx.Server do
         kafka_server_fetch(fetch_request, state)
       end
 
-      def handle_call({:fetch2, fetch_request}, _from, state) do
+      def handle_call({:fetch1, fetch_request}, _from, state) do
         kafka_server_fetch(fetch_request, state)
       end
 
