@@ -123,6 +123,7 @@ defmodule KafkaEx.Server0P8P2 do
     #   min_bytes: min_bytes,
     #   max_bytes: max_bytes
     #  }
+    IO.puts ("fetch1 in kafka_server_fetch #{request.topic}")
     true = consumer_group_if_auto_commit?(fetch_request.auto_commit, state)
     {response, state} = fetch(fetch_request, state)
 
@@ -264,7 +265,7 @@ defmodule KafkaEx.Server0P8P2 do
   end
 
   defp fetch(request, state) do
-    IO.puts ("fetch1 #{request.topic}")
+    IO.puts ("fetch1 in fetch #{request.topic}")
     true = consumer_group_if_auto_commit?(request.auto_commit, state)
 
     case network_request(request, Fetch, state) do
