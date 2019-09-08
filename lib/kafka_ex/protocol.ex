@@ -46,7 +46,7 @@ defmodule KafkaEx.Protocol do
         api_version \\ @default_api_version
       ) do
         # IO.puts( "api_Version #{api_version}")
-    <<api_key(type)::16, 2::16, correlation_id::32,
+    <<api_key(type)::16, 3::16, correlation_id::32,
       byte_size(client_id)::16, client_id::binary>>
   end
   @error_map %{
