@@ -113,9 +113,19 @@ defmodule KafkaEx.Server0P8P2 do
   end
 
   def kafka_server_fetch(fetch_request, state) do
+
+    # fetch_request = %FetchRequest{
+    #   auto_commit: auto_commit,
+    #   topic: topic,
+    #   partition: partition,
+    #   offset: retrieved_offset,
+    #   wait_time: wait_time,
+    #   min_bytes: min_bytes,
+    #   max_bytes: max_bytes
+    #  }
     true = consumer_group_if_auto_commit?(fetch_request.auto_commit, state)
     {response, state} = fetch(fetch_request, state)
-
+      IO.puts ("fetch1 #{fetch_request.topic}")
     {:reply, response, state}
   end
 
