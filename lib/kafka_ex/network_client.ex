@@ -94,7 +94,7 @@ defmodule KafkaEx.NetworkClient do
       end
 
     :ok = Socket.setopts(socket, [:binary, {:packet, 4}, {:active, true}])
-    IO.puts( "resp ready")
+
     response
   end
 
