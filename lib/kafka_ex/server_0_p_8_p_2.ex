@@ -123,7 +123,7 @@ defmodule KafkaEx.Server0P8P2 do
     #   min_bytes: min_bytes,
     #   max_bytes: max_bytes
     #  }
-    IO.puts ("fetch1 in kafka_server_fetch #{request.topic}")
+    IO.puts ("fetch1 in kafka_server_fetch #{fetch_request.topic}")
     true = consumer_group_if_auto_commit?(fetch_request.auto_commit, state)
     {response, state} = fetch(fetch_request, state)
 
