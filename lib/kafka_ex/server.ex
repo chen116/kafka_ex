@@ -865,7 +865,6 @@ defmodule KafkaEx.Server do
 
                 response ->
                   try do
-                    IO.puts( "gonna parse response ready")
                     module.parse_response(response)
                   rescue
                     _ ->
