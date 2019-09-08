@@ -274,7 +274,7 @@ defmodule KafkaEx do
 
     Server.call(
       worker_name,
-      {:fetch,
+      {:fetch1,
        %FetchRequest{
          auto_commit: auto_commit,
          topic: topic,
