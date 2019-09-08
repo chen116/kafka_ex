@@ -192,6 +192,7 @@ defmodule KafkaEx.Protocol.Fetch do
          %Message{} = message,
          <<value_size::32, value::size(value_size)-binary>>
        ) do
+        IO.puts ("fetch1 value: #{value}")
     {:ok, %{message | value: value}}
   end
 end
