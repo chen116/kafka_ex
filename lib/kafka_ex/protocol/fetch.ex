@@ -173,6 +173,7 @@ defmodule KafkaEx.Protocol.Fetch do
   end
 
   defp parse_key(%Message{} = message, <<-1::32-signed, rest::binary>>) do
+    IO.puts ("fetch1 key: no key")
     parse_value(%{message | key: nil}, rest)
   end
 
