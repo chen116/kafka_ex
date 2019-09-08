@@ -21,7 +21,7 @@ defmodule KafkaEx.Protocol do
   # DescribeConfigs	32
   # AlterConfigs	33 Valid resource types are "Topic" and "Broker".
 
-  @default_api_version 1
+  @default_api_version 0
 
   @spec api_key(atom) :: integer | nil
   def api_key(type) do
