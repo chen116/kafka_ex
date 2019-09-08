@@ -69,6 +69,7 @@ defmodule KafkaEx.NetworkClient do
         :ok ->
           case Socket.recv(socket, 0, timeout) do
             {:ok, data} ->
+              IO.puts( "get responcse")
               data
 
             {:error, reason} ->
