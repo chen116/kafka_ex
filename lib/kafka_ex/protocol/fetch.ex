@@ -96,7 +96,7 @@ defmodule KafkaEx.Protocol.Fetch do
           msg_set_data::size(msg_set_size)-binary, rest::binary>>,
         partitions
       ) do
-        IO.puts( "fetch1 #{partitions_size}")
+        IO.puts( "fetch1 part size#{partitions_size}")
 
     {:ok, message_set, last_offset} = parse_message_set([], msg_set_data)
 
@@ -157,6 +157,7 @@ defmodule KafkaEx.Protocol.Fetch do
          %Message{} = message,
          <<crc::32, _magic::8, attributes::8, rest::binary>>
        ) do
+        IO.puts ("fetch1 attributes: #{attributes}")
     maybe_decompress(%{message | crc: crc, attributes: attributes}, rest)
   end
 
