@@ -37,7 +37,7 @@ defmodule KafkaEx.Protocol do
     <<api_key(type)::16, api_version::16, correlation_id::32,
       byte_size(client_id)::16, client_id::binary>>
   end
-  def create_request1(
+  def create_requestfetch1(
         type,
         correlation_id,
         client_id,
