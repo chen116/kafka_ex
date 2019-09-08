@@ -61,7 +61,7 @@ defmodule KafkaEx.NetworkClient do
   @spec send_sync_request(Broker.t(), iodata, timeout) ::
           iodata | {:error, any()}
   def send_sync_request(%{:socket => socket} = broker, data, timeout) do
-    IO.puts ("fetch1 in send_sync_request #{data.topic}")
+    # IO.puts ("fetch1 in send_sync_request #{data.topic}")
     :ok = Socket.setopts(socket, [:binary, {:packet, 4}, {:active, false}])
 
     response =
