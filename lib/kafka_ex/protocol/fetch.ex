@@ -80,7 +80,7 @@ defmodule KafkaEx.Protocol.Fetch do
   def parse_response(
         <<_correlation_id::32-signed, topics_size::32-signed, rest::binary>>
       ) do
-        IO.puts( "resp parinsing topic")
+        IO.puts( "resp parinsing topic #{topics_size}")
     parse_topics(topics_size, rest, __MODULE__)
   end
 
