@@ -82,8 +82,8 @@ defmodule KafkaEx.Protocol.Fetch do
         <<_correlation_id::32-signed,  _throttle_time_ms::32-signed,      topics_size::32-signed, rest::binary>>
       ) do
         # IO.puts( "size of respns #{byte_size(<<_correlation_id::32-signed, topics_size::32-signed, rest::binary>>)}")
-        IO.puts( "#{byte_size(<<_correlation_id::32-signed,  _throttle_time_ms::32-signed,      topics_size::32-signed, rest::binary>>)}")
-        IO.puts( "#{topics_size}")
+        IO.puts( "fetch1 #{byte_size(<<_correlation_id::32-signed,  _throttle_time_ms::32-signed,      topics_size::32-signed, rest::binary>>)}")
+        IO.puts( "fetch1 #{topics_size}")
     parse_topics(topics_size, rest, __MODULE__)
   end
 
@@ -96,6 +96,8 @@ defmodule KafkaEx.Protocol.Fetch do
           msg_set_data::size(msg_set_size)-binary, rest::binary>>,
         partitions
       ) do
+        IO.puts( "fetch1 #{partitions_size}")
+
     {:ok, message_set, last_offset} = parse_message_set([], msg_set_data)
 
     parse_partitions(partitions_size - 1, rest, [
