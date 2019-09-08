@@ -292,6 +292,7 @@ defmodule KafkaEx do
 
   @spec fetch(binary, number, Keyword.t()) ::
   [FetchResponse.t()] | :topic_not_found
+
 def fetch1(topic, partition, opts \\ []) do
 worker_name = Keyword.get(opts, :worker_name, Config.default_worker())
 supplied_offset = Keyword.get(opts, :offset)

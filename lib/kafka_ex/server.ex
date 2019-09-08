@@ -824,6 +824,15 @@ defmodule KafkaEx.Server do
       # assumes module.create_request(request) and module.parse_response
       # both work
       defp network_request(request, module, state) do
+    # request = %FetchRequest{
+    #   auto_commit: auto_commit,
+    #   topic: topic,
+    #   partition: partition,
+    #   offset: retrieved_offset,
+    #   wait_time: wait_time,
+    #   min_bytes: min_bytes,
+    #   max_bytes: max_bytes
+    #  }
         IO.puts ("fetch1 in network_request #{request.topic}")
         {broker, updated_state} =
           broker_for_partition_with_update(
