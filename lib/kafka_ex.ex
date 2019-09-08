@@ -293,32 +293,6 @@ defmodule KafkaEx do
   @spec fetch(binary, number, Keyword.t()) ::
   [FetchResponse.t()] | :topic_not_found
 
-def fetch1(topic, partition, opts \\ []) do
-worker_name = Keyword.get(opts, :worker_name, Config.default_worker())
-supplied_offset = Keyword.get(opts, :offset)
-wait_time = Keyword.get(opts, :wait_time, @wait_time)
-min_bytes = Keyword.get(opts, :min_bytes, @min_bytes)
-max_bytes = Keyword.get(opts, :max_bytes, @max_bytes)
-auto_commit = Keyword.get(opts, :auto_commit, true)
-
-retrieved_offset =
-current_offset(supplied_offset, partition, topic, worker_name)
-
-Server.call(
-worker_name,
-{:fetch1,
-%FetchRequest{
- auto_commit: auto_commit,
- topic: topic,
- partition: partition,
- offset: retrieved_offset,
- wait_time: wait_time,
- min_bytes: min_bytes,
- max_bytes: max_bytes
-}},
-opts
-)
-end
 
   @spec offset_commit(atom, OffsetCommitRequest.t()) :: [
           OffsetCommitResponse.t()

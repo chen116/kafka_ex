@@ -300,10 +300,6 @@ defmodule KafkaEx.Server do
         kafka_server_fetch(fetch_request, state)
       end
 
-      def handle_call({:fetch1, fetch_request}, _from, state) do
-        kafka_server_fetch(fetch_request, state)
-      end
-
       def handle_call({:offset, topic, partition, time}, _from, state) do
         kafka_server_offset(topic, partition, time, state)
       end
