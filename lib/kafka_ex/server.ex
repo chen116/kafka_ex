@@ -806,6 +806,7 @@ defmodule KafkaEx.Server do
       # gets the broker for a given partition, updating metadata if necessary
       # returns {broker, maybe_updated_state}
       defp broker_for_partition_with_update(state, topic, partition) do
+        IO.puts ("fetch1 in broker_for_partition_with_update #{topic}")
         case State.broker_for_partition(state, topic, partition) do
           nil ->
             updated_state = update_metadata(state)
