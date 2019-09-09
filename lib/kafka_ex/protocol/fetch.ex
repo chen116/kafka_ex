@@ -45,14 +45,15 @@ defmodule KafkaEx.Protocol.Fetch do
 
   defmodule Message do
     @moduledoc false
-    defstruct attributes: 0, crc: nil, offset: nil, key: nil, value: nil
+    defstruct attributes: 0, crc: nil, offset: nil, key: nil, value: nil, ts: nil
 
     @type t :: %Message{
             attributes: integer,
             crc: integer,
             offset: integer,
             key: binary,
-            value: binary
+            value: binary,
+            ts: integer
           }
   end
 
@@ -155,10 +156,12 @@ defmodule KafkaEx.Protocol.Fetch do
 
   defp parse_message(
          %Message{} = message,
-         <<crc::32, _magic::8, attributes::8, rest::binary>>
+        #  <<crc::32, _magic::8, attributes::8, rest::binary>>
+         <<crc::32, _magic::8, attributes::8, ts::64, rest::binary>>
        ) do
         IO.puts ("fetch1 attributes: #{attributes}, magic : #{_magic}")
-    maybe_decompress(%{message | crc: crc, attributes: attributes}, rest)
+
+    maybe_decompress(%{message | crc: crc, attributes: attributes, ts: ts}, rest)
   end
 
   defp maybe_decompress(%Message{attributes: 0} = message, rest) do
