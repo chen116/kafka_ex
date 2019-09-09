@@ -153,7 +153,6 @@ defmodule KafkaEx.Protocol.Fetch do
          %Message{} = message,
          <<crc::32, _magic::8, attributes::8, timestamp::64, rest::binary>>
        ) do
-
     maybe_decompress(%{message | crc: crc, attributes: attributes, timestamp: timestamp}, rest)
   end
 
