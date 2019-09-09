@@ -167,7 +167,9 @@ defmodule KafkaEx.Protocol.Fetch do
   defp maybe_decompress(%Message{attributes: 0} = message, rest) do
     parse_key(message, rest)
   end
-
+  defp maybe_decompress(%Message{attributes: 8} = message, rest) do
+    parse_key(message, rest)
+  end
   defp maybe_decompress(%Message{attributes: attributes}, rest) do
     <<-1::32-signed, value_size::32, value::size(value_size)-binary>> = rest
     decompressed = Compression.decompress(attributes, value)
