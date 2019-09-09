@@ -37,16 +37,16 @@ defmodule KafkaEx.Protocol do
     <<api_key(type)::16, api_version::16, correlation_id::32,
       byte_size(client_id)::16, client_id::binary>>
   end
-  @spec create_requestfetch1(atom, integer, binary, integer) ::
+  @spec create_request_timestamp(atom, integer, binary, integer) ::
           <<_::64, _::_*8>>
-  def create_requestfetch1(
+  def create_request_timestamp(
         type,
         correlation_id,
         client_id,
-        api_version \\ @default_api_version
+        api_version \\ 2
       ) do
         # IO.puts( "api_Version #{api_version}")
-    <<api_key(type)::16, 2::16, correlation_id::32,
+    <<api_key(type)::16, api_version::16, correlation_id::32,
       byte_size(client_id)::16, client_id::binary>>
   end
   @error_map %{

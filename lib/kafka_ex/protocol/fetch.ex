@@ -45,7 +45,7 @@ defmodule KafkaEx.Protocol.Fetch do
 
   defmodule Message do
     @moduledoc false
-    defstruct attributes: 0, crc: nil, offset: nil, key: nil, value: nil, ts: nil
+    defstruct attributes: 0, crc: nil, offset: nil, key: nil, value: nil, timestamp: nil
 
     @type t :: %Message{
             attributes: integer,
@@ -53,13 +53,13 @@ defmodule KafkaEx.Protocol.Fetch do
             offset: integer,
             key: binary,
             value: binary,
-            ts: integer
+            timestamp: integer
           }
   end
 
   @spec create_request(Request.t()) :: binary
   def create_request(fetch_request) do
-    KafkaEx.Protocol.create_requestfetch1(
+    KafkaEx.Protocol.create_request_timestamp(
       :fetch,
       fetch_request.correlation_id,
       fetch_request.client_id
@@ -79,12 +79,8 @@ defmodule KafkaEx.Protocol.Fetch do
   end
 
   def parse_response(
-        # <<_correlation_id::32-signed, topics_size::32-signed, rest::binary>>
         <<_correlation_id::32-signed,  _throttle_time_ms::32-signed,      topics_size::32-signed, rest::binary>>
       ) do
-        # IO.puts( "size of respns #{byte_size(<<_correlation_id::32-signed, topics_size::32-signed, rest::binary>>)}")
-        IO.puts( "fetch1 #{byte_size(<<_correlation_id::32-signed,  _throttle_time_ms::32-signed,      topics_size::32-signed, rest::binary>>)}")
-        IO.puts( "fetch1 #{topics_size}")
     parse_topics(topics_size, rest, __MODULE__)
   end
 
@@ -97,7 +93,6 @@ defmodule KafkaEx.Protocol.Fetch do
           msg_set_data::size(msg_set_size)-binary, rest::binary>>,
         partitions
       ) do
-        IO.puts( "fetch1 part size#{partitions_size}")
 
     {:ok, message_set, last_offset} = parse_message_set([], msg_set_data)
 
@@ -156,12 +151,10 @@ defmodule KafkaEx.Protocol.Fetch do
 
   defp parse_message(
          %Message{} = message,
-        #  <<crc::32, _magic::8, attributes::8, rest::binary>>
-         <<crc::32, _magic::8, attributes::8, ts::64, rest::binary>>
+         <<crc::32, _magic::8, attributes::8, timestamp::64, rest::binary>>
        ) do
-        IO.puts ("fetch1 attributes: #{attributes}, magic : #{_magic}, ts: #{ts}")
 
-    maybe_decompress(%{message | crc: crc, attributes: attributes, ts: ts}, rest)
+    maybe_decompress(%{message | crc: crc, attributes: attributes, timestamp: timestamp}, rest)
   end
 
   defp maybe_decompress(%Message{attributes: 0} = message, rest) do
@@ -178,7 +171,6 @@ defmodule KafkaEx.Protocol.Fetch do
   end
 
   defp parse_key(%Message{} = message, <<-1::32-signed, rest::binary>>) do
-    IO.puts ("fetch1 key: no key")
     parse_value(%{message | key: nil}, rest)
   end
 
@@ -197,7 +189,6 @@ defmodule KafkaEx.Protocol.Fetch do
          %Message{} = message,
          <<value_size::32, value::size(value_size)-binary>>
        ) do
-        IO.puts ("fetch1 value: #{value}")
     {:ok, %{message | value: value}}
   end
 end
