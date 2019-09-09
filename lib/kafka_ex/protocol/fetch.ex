@@ -159,7 +159,7 @@ defmodule KafkaEx.Protocol.Fetch do
         #  <<crc::32, _magic::8, attributes::8, rest::binary>>
          <<crc::32, _magic::8, attributes::8, ts::64, rest::binary>>
        ) do
-        IO.puts ("fetch1 attributes: #{attributes}, magic : #{_magic}")
+        IO.puts ("fetch1 attributes: #{attributes}, magic : #{_magic}, ts: #{ts}")
 
     maybe_decompress(%{message | crc: crc, attributes: attributes, ts: ts}, rest)
   end
